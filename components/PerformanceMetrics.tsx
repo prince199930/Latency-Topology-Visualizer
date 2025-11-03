@@ -5,11 +5,6 @@ import { useAppStore } from '@/store/useAppStore';
 
 export function PerformanceMetrics() {
   const metrics = useAppStore(state => state.performanceMetrics);
-  const latencyData = useAppStore(state => state.latencyData);
-
-  const avgLatency = latencyData.length > 0
-    ? Math.round(latencyData.reduce((sum, l) => sum + l.latency, 0) / latencyData.length)
-    : 0;
 
   return (
     <div className="absolute top-4 right-4 bg-gray-900/90 backdrop-blur-sm text-white rounded-lg p-4 shadow-xl border border-gray-700 z-10">
@@ -40,7 +35,7 @@ export function PerformanceMetrics() {
             <Activity size={16} className="text-green-500" />
             <span className="text-xs text-gray-400">Connections</span>
           </div>
-          <div className="text-2xl font-bold">{latencyData.length}</div>
+          <div className="text-2xl font-bold">{metrics.activeConnections}</div>
         </div>
 
         <div className="bg-gray-800/50 rounded-lg p-3">
@@ -48,7 +43,7 @@ export function PerformanceMetrics() {
             <Timer size={16} className="text-purple-500" />
             <span className="text-xs text-gray-400">Avg Latency</span>
           </div>
-          <div className="text-2xl font-bold">{avgLatency}ms</div>
+          <div className="text-2xl font-bold">{metrics.averageLatency}ms</div>
         </div>
       </div>
     </div>

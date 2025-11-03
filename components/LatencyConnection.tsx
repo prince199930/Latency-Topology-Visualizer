@@ -2,6 +2,7 @@
 
 import { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
+import { Line } from '@react-three/drei';
 import * as THREE from 'three';
 import { LatencyData, ExchangeServer } from '@/types';
 import { getLatencyColor } from '@/utils/latencySimulator';
@@ -42,10 +43,6 @@ export function LatencyConnection({ latency, fromExchange, toExchange }: Latency
   }, [start, end]);
 
   const points = useMemo(() => curve.getPoints(50), [curve]);
-  const lineGeometry = useMemo(() => {
-    const geometry = new THREE.BufferGeometry().setFromPoints(points);
-    return geometry;
-  }, [points]);
 
   const color = getLatencyColor(latency.latency);
 
@@ -62,14 +59,13 @@ export function LatencyConnection({ latency, fromExchange, toExchange }: Latency
 
   return (
     <group>
-      <line geometry={lineGeometry}>
-        <lineBasicMaterial
-          color={color}
-          transparent
-          opacity={0.4}
-          linewidth={2}
-        />
-      </line>
+      <Line
+        points={points}
+        color={color}
+        lineWidth={2}
+        transparent
+        opacity={0.4}
+      />
 
       <mesh ref={pulseRef}>
         <sphereGeometry args={[0.02, 8, 8]} />
