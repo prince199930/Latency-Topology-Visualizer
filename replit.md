@@ -62,6 +62,8 @@ A Next.js application featuring an interactive 3D world map that visualizes cryp
 ### Running the Application
 ```bash
 npm run dev
+   OR
+npm run dev -- -p 5001
 ```
 The application runs on `http://localhost:5000` (configured for Replit environment).
 
